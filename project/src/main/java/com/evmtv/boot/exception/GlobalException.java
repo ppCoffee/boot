@@ -44,7 +44,7 @@ public class GlobalException {
 			
 			message = ResultHelper.FAILED_MESSAGE;
 			
-		}
+		} 
 		
 		log.error("error",e);
 		

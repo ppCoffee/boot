@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ToString
-@Data
+@Data 
 public class ResultHelper<T> {
 	
 	public static final String SUCCESS = "1001";
