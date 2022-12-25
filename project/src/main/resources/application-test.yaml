@@ -1,0 +1,104 @@
+
+spring:
+#  security: 
+#    user:
+#      name: admin
+#      password: adminn
+  banner:
+    location: classpath:b.txt
+  boot: 
+    admin: 
+      client: 
+        url: http://127.0.0.1:9527
+#        username: "admin"
+#        password: "admin"
+        instance:
+          prefer-ip: true
+
+  application:
+    name: project
+  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/project?useUnicode=true&characterEncoding=UTF-8
+#    username: root
+#    password: 
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+#      max-wait: 2000
+      filters: stat,wall
+      filter: 
+        stat:
+          enabled: true
+          slow-sql-millis: 2000
+#          log-slow-sql: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: true
+      stat-view-servlet:
+        url-pattern: /druid/*
+        enabled: true
+#        allow: 127.0.0.1
+        login-username: admin
+        login-password: admin
+        reset-enable: true
+      aop-patterns: com.evmtv.boot.*
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+  web:
+    resources:
+      static-locations: 
+      - classpath:/META-INF/resources/
+      - classpath:/resources/
+      - classpath:/static/
+      - classpath:/public/
+      - classpath:/templates/
+#  main:
+#    allow-circular-references: true
+#  mvc:
+#    static-path-pattern: /res/** #此配置打开会导致无法访问自定义index.html和favicon
+#  mvc:
+#    contentnegotiation:
+#      favor-parameter: true #内容协商  format=xml
+#mybatis:
+#  mapper-locations: classpath:com/evmtv/boot/mapper/impl/*.xml
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+  global-config:
+    db-config:
+      table-prefix: project_
+    
+logging:
+  config: classpath:logback-spring.xml
+  file: 
+    name: /opt/logs/boot/log.log
+  level:
+    root: info
+    '[com.evmtv]': debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#        exclude: "env,beans"
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+      external-file: /opt/logs/boot/log.log
+      
+        
+
+
+server:
+#  servlet:
+#    context-path: /project
+  port: 8081
+
+
+#configEntity:
+#  name: 王五
