@@ -19,11 +19,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
-@Deprecated
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ToString
 @Data 
-public class ResultHelper<T> {
+public class ResponseUtil<T> {
 	
 	public static final String SUCCESS = "1001";
 	public static final String SUCCESS_MESSAGE = "success";
@@ -42,9 +41,9 @@ public class ResultHelper<T> {
 	
 	private String message;
 	
-	public static <T> ResultHelper<T> result(String code, String message, T data) {
+	public ResponseUtil<T> result(String code, String message, T data) {
 		
-		ResultHelper<T> result = new ResultHelper<T>();
+		ResponseUtil<T> result = new ResponseUtil<T>();
 		
 		if(data != null) {
 			result.setData(data);
@@ -55,7 +54,7 @@ public class ResultHelper<T> {
 		return result;
 	}
 	
-	public static <T> ResultHelper<T> result(String code, String message) {
+	public ResponseUtil<T> result(String code, String message) {
 		
 		return result(code,message,null);
 	}
