@@ -18,7 +18,7 @@ import lombok.ToString;
 @Configuration
 public class ConfigEntity {
 	
-	@Value("${configEntity.name:李四}")
+	@Value("${configEntity.name:赵六}")
 	private String name;
 
 	
