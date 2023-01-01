@@ -1,13 +1,21 @@
-package com.example.demo;
+package com.evmtv.demo;
+
+
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class SecurityOauthApplication {
+
+
+
+@SpringBootApplication()
+public class MainApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SecurityOauthApplication.class, args);
-	}
 
+		SpringApplication.run(MainApplication.class, args);
+
+	}
+	
 }
