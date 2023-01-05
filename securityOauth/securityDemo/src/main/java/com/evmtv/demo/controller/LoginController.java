@@ -10,27 +10,43 @@
 
 package com.evmtv.demo.controller;
 
-import java.io.IOException;
+
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import util.ResponseUtil;
+
+@RestController
 public class LoginController {
 	
-	
-	@PostMapping("/login")
-	public void login(HttpServletResponse resp,String username,String password) {
+	@SuppressWarnings("unchecked")
+	@PostMapping("/toMain")
+	public ResponseUtil<Collection<GrantedAuthority>> toMain(HttpServletResponse resp,HttpSession session) throws Exception {
 		
-		System.err.println(username + " - " + password);
+		//resp.sendRedirect("/main.html");
+		Collection<GrantedAuthority> attribute = (Collection<GrantedAuthority>) session.getAttribute("auth");
 		
-		try {
-			resp.sendRedirect("/main.html");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return new ResponseUtil<Collection<GrantedAuthority>>().result(ResponseUtil.SUCCESS, ResponseUtil.SUCCESS_MESSAGE + " 登录成功", attribute);
 	}
+	
+	@PostMapping("/toError")
+	public ResponseUtil<String> toError(HttpServletResponse resp) throws Exception {
+		
+//		resp.sendRedirect("/error.html");
+		return new ResponseUtil<String>().result(ResponseUtil.FAILED, ResponseUtil.FAILED_MESSAGE + " 登录失败");
+	}
+	
+	@GetMapping("/authFailed")
+	public ResponseUtil<String> authFailed() throws Exception {
+		
+		return new ResponseUtil<String>().result(ResponseUtil.FAILED, ResponseUtil.FAILED_MESSAGE + " 认证失败");
+	}
+	
 }
