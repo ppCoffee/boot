@@ -1,7 +1,10 @@
 package com.evmtv.boot;
 
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -14,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.evmtv.boot.entity.User;
 import com.evmtv.boot.service.UserService;
+import com.evmtv.boot.util.JwtHelper;
+
 
 
 @SpringBootTest
@@ -33,6 +38,7 @@ class ProjectApplicationTests {
 		System.out.println("==>" + ds.getClass());
 	}
 	
+	@Disabled
 	//@Transactional
 	@Test
 	void insert() {
@@ -44,6 +50,30 @@ class ProjectApplicationTests {
 		boolean result = userService.save(user);
 		
 		System.out.println(result);
+	}
+	
+	@Test
+	void jwtTest() throws Exception {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("username", "张三");
+		String token = JwtHelper.createToken(map);
+		System.out.println(token);
+		System.out.println("=================================================");
+		Map<String, Object> msg = JwtHelper.getMessage(token, "username");
+		System.out.println(msg.get("username"));
+		System.out.println(msg.get("jti"));
+		System.out.println(msg.get("iat"));
+		System.out.println(msg.get("sub"));
+		System.out.println(msg.get("exp"));
+		String[] arr = token.split("\\.");
+		Base64.Decoder decoder = Base64.getDecoder();
+		byte[] b1 = decoder.decode(arr[0]);
+		byte[] b2 = decoder.decode(arr[1].replace("\r\n", "").replaceAll("_", ""));
+//		byte[] b3 = decoder.decode(arr[2].replace("\r\n", "").replaceAll("_", "").replaceAll("-", ""));
+		System.out.println(new String(b1, "UTF-8"));
+		System.out.println(new String(b2, "UTF-8"));
+//		System.out.println(new String(b3, "UTF-8"));
+		
 	}
 	
 }
