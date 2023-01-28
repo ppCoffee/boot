@@ -16,6 +16,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import util.ResponseUtil;
 public class LoginController {
 	
 	@SuppressWarnings("unchecked")
+//	@Secured("ROLE_gm") 基于注解角色判断，main需要开启@EnableGlobalMethodSecurity(securedEnabled = true)
 	@PostMapping("/toMain")
 	public ResponseUtil<Collection<GrantedAuthority>> toMain(HttpServletResponse resp,HttpSession session) throws Exception {
 		

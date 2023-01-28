@@ -13,20 +13,15 @@ package com.evmtv.demo.config.security;
 
 
 
-import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 
 @SuppressWarnings("deprecation")
@@ -43,12 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		//表单提交
 		http.formLogin()
+				//自定义入参
+				.usernameParameter("username")
+				.passwordParameter("password")
 				//指定登录页
 				.loginPage("/login.html")
 				//html表单提交的接口地址
@@ -69,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/login.html").permitAll()
 				//放行静态路径
 				.antMatchers("/css/**","/js/**","/images/**").permitAll()
+//				.mvcMatchers("/xxx").servletPath("/xxx").permitAll() 基于mvc放行某段path下的地址路径
 //				.antMatchers("/**/*.png")
 //				.antMatchers("/main2.html").hasAnyAuthority("admin","admiN") //基于权限，严格区分大小写
 //				.antMatchers("/main2.html").hasAnyRole("gm") //基于角色，严格区分大小写
@@ -85,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		
 		
-		//TODO 类似防火墙
+		//类似防火墙 开启情况下需要页面上表单传入_csrf的value
 	    http.csrf().disable();
 	}
 
