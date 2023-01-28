@@ -46,7 +46,6 @@
 		<version>2.2.5.RELEASE</version>
 	</dependency>
 	
-	
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-data-redis</artifactId>

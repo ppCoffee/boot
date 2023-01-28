@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @SuppressWarnings("deprecation")
-@Configuration
+//@Configuration
 public class RedisConfig {
 	
 	@Resource

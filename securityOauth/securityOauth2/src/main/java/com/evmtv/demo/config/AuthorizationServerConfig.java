@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import com.evmtv.demo.service.UserService;
 
@@ -39,8 +40,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	AuthenticationManager authenticationManager;
 	
 	@Resource
-	@Qualifier("redisTokenStore")
+//	@Qualifier("redisTokenStore")
+	@Qualifier("jwtTokenStore")
 	private TokenStore tokenStore;
+	
+	@Resource
+	private JwtAccessTokenConverter jwtAccessTokenConverter;
 	
 	@Resource
 	UserService userService;
@@ -64,11 +69,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		
 		endpoints.authenticationManager(authenticationManager)
 					.userDetailsService(userService)
-					.tokenStore(tokenStore);
+					.tokenStore(tokenStore)
+					.accessTokenConverter(jwtAccessTokenConverter);
 	}
-
-
-
+	
+	 
 
 
 	/**
