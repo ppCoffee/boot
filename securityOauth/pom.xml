@@ -57,5 +57,6 @@
 		<module>Security</module>
 		<module>SecurityDemo</module>
 		<module>securityOauth2</module>
+		<module>ssp-client-01</module>
 	</modules>
 </project>

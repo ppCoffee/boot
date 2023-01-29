@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -117,14 +118,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		clients.inMemory()
 			.withClient("clientId") //客户端id
 			.secret(passwordEncoder.encode("112233")) //密钥
-			.redirectUris("http://www.baidu.com") //重定向地址
+			.redirectUris("http://127.0.0.1:8081/login") //重定向地址
 			.scopes("all") //授权范围
-			.accessTokenValiditySeconds(20) //1分钟后token失效
+			.accessTokenValiditySeconds(60) //1分钟后token失效
 			.refreshTokenValiditySeconds(60*60)//1小时后刷新令牌失效时间
+			.autoApprove(true) //自动允许授权访问
 			.authorizedGrantTypes("authorization_code","password","refresh_token"); //授权类型 authorization_code(授权模式) password(密码模式) refresh_token(刷新令牌)
 		
-		
 	}
+
+
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		
+		//sso单点登录必须配置，isAuthenticated()代表获取密钥必须要身份认证
+		security.tokenKeyAccess("isAuthenticated()");
+	}
+	
 	
 	
 }
