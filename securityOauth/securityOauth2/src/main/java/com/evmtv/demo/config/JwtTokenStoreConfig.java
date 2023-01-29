@@ -10,11 +10,13 @@
 
 package com.evmtv.demo.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -30,8 +32,14 @@ public class JwtTokenStoreConfig {
 	JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		// JWT签名
-		converter.setSigningKey("jwt");
+		converter.setSigningKey(AuthorizationServerConfig.SIGN);
 		return converter;
 
+	}
+	
+	@Bean
+	JwtTokenEnhancer jwtTokenEnhancer() {
+		
+		return new JwtTokenEnhancer();
 	}
 }
