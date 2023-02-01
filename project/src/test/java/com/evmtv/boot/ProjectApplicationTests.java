@@ -1,10 +1,14 @@
 package com.evmtv.boot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -13,7 +17,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.evmtv.boot.entity.User;
 import com.evmtv.boot.service.UserService;
@@ -54,6 +57,7 @@ class ProjectApplicationTests {
 	
 	@Test
 	void jwtTest() throws Exception {
+		
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("username", "张三");
 		String token = JwtHelper.createToken(map);
@@ -76,4 +80,24 @@ class ProjectApplicationTests {
 		
 	}
 	
+	@Disabled
+	@Test
+	void SortTest() {
+		
+		List<User> list = new ArrayList<User>();
+		for(int i = 0; i < 2; i++) {
+			User user = new User();
+			user.setAge(i);
+			user.setSaveDate(new Date().toString());
+			user.setUserId(UUID.randomUUID().toString());
+			System.out.println(user.toString());
+			list.add(user);
+		}
+		
+		list.sort(Comparator.comparing(User::getUserId));
+		
+		list.forEach(item -> {
+			System.out.println(item.toString());
+		});
+	}
 }
