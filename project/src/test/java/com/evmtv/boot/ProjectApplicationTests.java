@@ -95,6 +95,7 @@ class ProjectApplicationTests {
 		}
 		
 		list.sort(Comparator.comparing(User::getUserId));
+//		list.sort(Comparator.comparing(User::getUserId).reversed()); //降序
 		
 		list.forEach(item -> {
 			System.out.println(item.toString());
